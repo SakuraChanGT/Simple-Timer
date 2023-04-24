@@ -1,0 +1,37 @@
+import tkinter as tk
+
+countdown = 84 * 24 * 60 * 60 + 11 * 60 * 60 + 45 * 60 
+
+def update_label():
+    global countdown
+    if countdown:
+        # Calculate remaining days, hours, and minutes
+        days = countdown // (24 * 60 * 60)
+        hours = (countdown // (60 * 60)) % 24
+        minutes = (countdown // 60) % 60
+        seconds = countdown % 60
+        
+        # Update label text
+        label.config(text=f"{days:02d}:{hours:02d}:{minutes:02d}:{seconds:02d}")
+        
+        # Decrement countdown
+        countdown -= 1
+        
+        # Schedule the update after 1 second
+        root.after(1000, update_label)
+    else:
+        label.config(text="Time's up!")
+
+# Create GUI window
+root = tk.Tk()
+root.title("Countdown Timer")
+
+# Create label widget
+label = tk.Label(root, font=("Arial", 48), text="00:00:00:00")
+label.pack(padx=50, pady=50)
+
+# Start countdown
+update_label()
+
+# Start GUI loop
+root.mainloop()
